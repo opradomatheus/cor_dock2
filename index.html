@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cor logo dock</title>
+</head>
+
+<style>
+  body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+  }
+
+  #svgContainer {
+      max-width: 90%; /* Define a largura máxima do contêiner SVG */
+      margin: auto; /* Centraliza o contêiner */
+  }
+</style>
+
+<body>
+
+<input type="color" id="colorPicker">
+<div id="svgContainer">
+    <object id="svgObject" type="image/svg+xml" data="dock.svg"></object>
+</div>
+
+<script>
+    const colorPicker = document.getElementById('colorPicker');
+    const svgObject = document.getElementById('svgObject');
+    let svgDoc;
+
+    // Espera até que o arquivo SVG esteja carregado
+    svgObject.onload = function() {
+        svgDoc = svgObject.contentDocument;
+    };
+
+    colorPicker.addEventListener('input', function() {
+        const selectedColor = colorPicker.value;
+        changeSVGColor(selectedColor);
+    });
+
+    function changeSVGColor(color) {
+        if (svgDoc) {
+            const elements = svgDoc.querySelectorAll('[fill]');
+            elements.forEach(element => {
+                element.setAttribute('fill', color);
+            });
+        } else {
+            console.error('O arquivo SVG ainda não foi carregado.');
+        }
+    }
+</script>
+
+</body>
+</html>
